@@ -72,10 +72,14 @@ defmodule ShoppingList do
   @doc """
   Calculates the shopping list and distributes values to the buyers.
   """
-  @spec shopping_list_calc(any, any) :: number
-  def shopping_list_calc(shopping_list, _email_list) do
-    shopping_list
-      |> Enum.map(&(ShoppingItem.calc_item(&1.quantity, &1.unit_price)))
-      |> Enum.sum()
+  @spec shopping_list_calc(any, any) :: list
+  def shopping_list_calc(shopping_list, email_list) do
+    shopping_list_sum =
+      shopping_list
+        |> Enum.map(&(ShoppingItem.calc_item(&1.quantity, &1.unit_price)))
+        |> Enum.sum()
+
+    email_list
+      |> EmailsList.distrubute_to_buyers(shopping_list_sum)
   end
 end
