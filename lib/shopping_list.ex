@@ -12,6 +12,22 @@ defmodule ShoppingList do
   end
 
   @doc """
+  Get full shopping_list.
+
+  ## Example
+
+      iex> ShoppingList.create_shopping_list(1, 100)
+      iex> ShoppingList.create_shopping_list(1, 500)
+      iex> ShoppingList.shopping_list
+      [
+        %ShoppingItem{quantity: 1, unit_price: 100},
+        %ShoppingItem{quantity: 1, unit_price: 500}
+      ]
+  """
+  @spec shopping_list :: any
+  def shopping_list, do: read()
+
+  @doc """
   Create shopping list items.
 
   ## Params
