@@ -68,4 +68,14 @@ defmodule ShoppingList do
       {:error, :enoent} -> {:error, "Invalid File."}
     end
   end
+
+  @doc """
+  Calculates the shopping list and distributes values to the buyers.
+  """
+  @spec shopping_list_calc(any, any) :: number
+  def shopping_list_calc(shopping_list, _email_list) do
+    shopping_list
+      |> Enum.map(&(ShoppingItem.calc_item(&1.quantity, &1.unit_price)))
+      |> Enum.sum()
+  end
 end
