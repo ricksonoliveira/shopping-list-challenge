@@ -1,6 +1,6 @@
 # ShoppingList
 
-**TODO: Add description**
+ShoppingList is a pure elixir handmade challenge proposed by [Stone](https://www.stone.com.br/), with the purpose to fully distribute the values of a given shopping list between the buyers of the list.
 
 ## Installation
 
