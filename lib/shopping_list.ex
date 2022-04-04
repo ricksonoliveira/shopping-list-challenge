@@ -4,14 +4,6 @@ defmodule ShoppingList do
   """
 
   @doc """
-  Start default settings.
-  """
-  @spec start :: :ok | {:error, atom}
-  def start do
-    File.write("shopping_list.txt", :erlang.term_to_binary([]))
-  end
-
-  @doc """
   Get full shopping_list.
 
   ## Example
@@ -25,7 +17,7 @@ defmodule ShoppingList do
       ]
   """
   @spec shopping_list :: any
-  def shopping_list, do: read()
+  def shopping_list, do: Files.read("shopping_list")
 
   @doc """
   Create shopping list items.
@@ -37,49 +29,74 @@ defmodule ShoppingList do
 
   ## Example
 
-      iex> ShoppingList.start()
+      iex> Files.start
       iex> ShoppingList.create_shopping_list(10, 100)
       {:ok, [%ShoppingItem{quantity: 10, unit_price: 100}]}
+
+      iex> Files.start
+      iex> ShoppingList.create_shopping_list(1.0, 100)
+      {:error, "Quantity and Unit Price must be integers!"}
   """
   @spec create_shopping_list(any, any) :: {:ok, any}
   def create_shopping_list(quantity, unit_price) do
-    shopping_list = %ShoppingItem{quantity: quantity, unit_price: unit_price}
-    (read() ++ [shopping_list])
-      |> :erlang.term_to_binary()
-      |> write()
+    case is_quantity_and_unit_price_valid?(quantity, unit_price) do
+      {:ok, false} ->
+        shopping_list = %ShoppingItem{quantity: quantity, unit_price: unit_price}
+        (Files.read("shopping_list") ++ [shopping_list])
+          |> :erlang.term_to_binary()
+          |> Files.write("shopping_list")
 
-      {:ok, read()}
+        {:ok, Files.read("shopping_list")}
+      {:error, message} ->
+        {:error, message}
+    end
   end
 
-  defp write(shopping_list) do
-    File.write!("shopping_list.txt", shopping_list)
+  defp is_quantity_and_unit_price_valid?(quantity, unit_price) do
+    case !is_integer(quantity) or !is_integer(unit_price) do
+      true ->
+        {:error, "Quantity and Unit Price must be integers!"}
+      false ->
+        {:ok, false}
+    end
   end
-
 
   @doc """
-  Read shopping list data file.
+  Returns the list of emails with values distributed.
   """
-  @spec read :: any
-  def read() do
-    case File.read("shopping_list.txt") do
-      {:ok, shopping_list} ->
-        shopping_list
-        |> :erlang.binary_to_term()
-      {:error, :enoent} -> {:error, "Invalid File."}
+  @spec get_shopping_list_distributed :: {:error, <<_::472>>} | {:ok, list}
+  def get_shopping_list_distributed do
+    shopping_list = shopping_list()
+    emails_list = EmailsList.emails_list()
+
+    case is_shopping_or_email_list_empty?(shopping_list, emails_list) do
+      {:error, message} ->
+        {:error, message}
+      {:ok, false} ->
+        {:ok, calc(shopping_list, emails_list)}
+    end
+  end
+
+  defp is_shopping_or_email_list_empty?(shopping_list, emails_list) do
+    case Enum.empty?(shopping_list) or Enum.empty?(emails_list) do
+      true ->
+        {:error, "Shopping list and Email list should have at least one info!"}
+      false ->
+        {:ok, false}
     end
   end
 
   @doc """
   Calculates the shopping list and distributes values to the buyers.
   """
-  @spec shopping_list_calc(any, any) :: list
-  def shopping_list_calc(shopping_list, email_list) do
+  @spec calc(any, any) :: list
+  def calc(shopping_list, emails_list) do
     shopping_list_sum =
       shopping_list
         |> Enum.map(&(ShoppingItem.calc_item(&1.quantity, &1.unit_price)))
         |> Enum.sum()
 
-    email_list
+    emails_list
       |> EmailsList.distrubute_to_buyers(shopping_list_sum)
   end
 end
