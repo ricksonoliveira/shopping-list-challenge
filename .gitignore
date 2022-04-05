@@ -24,3 +24,6 @@ shopping_list-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+shopping_list.txt
+emails_list.txt
