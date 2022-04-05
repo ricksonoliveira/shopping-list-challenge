@@ -35,7 +35,7 @@ After that, we'll start playing. 😊
 
 First, you'll need to create the lists in which we'll work with. Which are the shopping list and the email list of our buyers. But first we'll start our app settings by using the `start/0` function that will create the files in which will store our lists data.
 
-* *Note: if you want to erase all data from the lists, jsut use the `start/0` function at any point and everything will be reinitialized*
+* *Note: if you want to erase all data from the lists, just use the `start/0` function at any point and everything will be reinitialized*
 
 To do that, follow the example:
 
@@ -138,7 +138,7 @@ So the result in this case will be:
 
 Generating emails list distributed with infinite sums
 
-Now if we add Lord Vader into this mess, we'll have to give him him his equal part, plus the rest amount of the value so not a single cent will be missing!
+Now if we add Lord Vader into this mess, we'll have to give him his equal part, plus the rest amount of the value so not a single cent will be missing!
 
 ```console
 EmailsList.create_emails_list("darthvader@mail.com")
