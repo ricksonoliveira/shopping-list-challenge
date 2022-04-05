@@ -11,6 +11,7 @@ ShoppingList is a pure elixir handmade challenge proposed by [Stone](https://www
 To use this service, you'll need [Elixir](https://elixir-lang.org/install.html) installed on your machine or container.
 
 Then, install the dependencies with the command:
+
 ```console
  mix deps.get
  ```
