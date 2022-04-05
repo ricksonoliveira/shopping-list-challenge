@@ -2,7 +2,7 @@
 
 ShoppingList is a pure elixir handmade challenge proposed by [Stone](https://www.stone.com.br/), with the purpose to fully distribute values from a given shopping list between the list's buyers.
 
-In this service good pratices were used such as: Linter, Formatation, Tests Coverage, Github Flow (Merges, Pull requests), and functional programming paradigms
+In this service good pratices were used for code qualtity such as: Linter, Formatation, Tests Coverage, Github Flow (Merges, Pull requests), and functional programming paradigms
 
 ## **Index**
 
