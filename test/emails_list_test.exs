@@ -9,7 +9,7 @@ defmodule EmailsListTest do
   ]
 
   setup do
-    Files.start
+    Files.start()
 
     on_exit(fn ->
       File.rm("shopping_list.txt")

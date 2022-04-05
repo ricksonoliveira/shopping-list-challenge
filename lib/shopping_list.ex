@@ -42,11 +42,13 @@ defmodule ShoppingList do
     case is_quantity_and_unit_price_valid?(quantity, unit_price) do
       {:ok, false} ->
         shopping_list = %ShoppingItem{quantity: quantity, unit_price: unit_price}
+
         (Files.read("shopping_list") ++ [shopping_list])
-          |> :erlang.term_to_binary()
-          |> Files.write("shopping_list")
+        |> :erlang.term_to_binary()
+        |> Files.write("shopping_list")
 
         {:ok, Files.read("shopping_list")}
+
       {:error, message} ->
         {:error, message}
     end
@@ -56,6 +58,7 @@ defmodule ShoppingList do
     case !is_integer(quantity) or !is_integer(unit_price) do
       true ->
         {:error, "Quantity and Unit Price must be integers!"}
+
       false ->
         {:ok, false}
     end
@@ -72,6 +75,7 @@ defmodule ShoppingList do
     case is_shopping_or_email_list_empty?(shopping_list, emails_list) do
       {:error, message} ->
         {:error, message}
+
       {:ok, false} ->
         {:ok, calc(shopping_list, emails_list)}
     end
@@ -81,6 +85,7 @@ defmodule ShoppingList do
     case Enum.empty?(shopping_list) or Enum.empty?(emails_list) do
       true ->
         {:error, "Shopping list and Email list should have at least one info!"}
+
       false ->
         {:ok, false}
     end
@@ -93,10 +98,10 @@ defmodule ShoppingList do
   def calc(shopping_list, emails_list) do
     shopping_list_sum =
       shopping_list
-        |> Enum.map(&(ShoppingItem.calc_item(&1.quantity, &1.unit_price)))
-        |> Enum.sum()
+      |> Enum.map(&ShoppingItem.calc_item(&1.quantity, &1.unit_price))
+      |> Enum.sum()
 
     emails_list
-      |> EmailsList.distrubute_to_buyers(shopping_list_sum)
+    |> EmailsList.distrubute_to_buyers(shopping_list_sum)
   end
 end

@@ -1,4 +1,4 @@
-defmodule Files  do
+defmodule Files do
   @moduledoc """
   Documentation for `Files`.
   """
@@ -12,7 +12,7 @@ defmodule Files  do
       :ok
   """
   @spec start :: :ok | {:error, atom}
-  def start() do
+  def start do
     File.write("shopping_list.txt", :erlang.term_to_binary([]))
     File.write("emails_list.txt", :erlang.term_to_binary([]))
   end
@@ -40,7 +40,9 @@ defmodule Files  do
       {:ok, file_data} ->
         file_data
         |> :erlang.binary_to_term()
-      {:error, :enoent} -> {:error, "Invalid File."}
+
+      {:error, :enoent} ->
+        {:error, "Invalid File."}
     end
   end
 
