@@ -25,7 +25,7 @@ And that's it... you're all set! 🎉
 
 ## **Usage**
 
-This service is written in pure [Elixir](https://elixir-lang.org/docs.html), so in order to use it, you'll need to open your terminal inside the application's folder and type th following command to enter interative mode:
+This service is written in pure [Elixir](https://elixir-lang.org/docs.html), so in order to use it, you'll need to open your terminal inside the application's folder and type the following command to enter interative mode:
 
 ```console
 iex -S mix
@@ -33,7 +33,9 @@ iex -S mix
 
 After that, we'll start playing. 😊
 
-First you'll need to create the lists in which we'll work with. Which are the shopping list and the email list of our buyers. But first we'll start our app settings by using the `start/0` function that will create the files in which will store our lists data.
+First, you'll need to create the lists in which we'll work with. Which are the shopping list and the email list of our buyers. But first we'll start our app settings by using the `start/0` function that will create the files in which will store our lists data.
+
+* *Note: if you want to erase all data from the lists, jsut use the `start/0` function at any point and everything will be reinitialized*
 
 To do that, follow the example:
 
@@ -55,7 +57,7 @@ The `crate_shopping_list/2` has the params:
 * `quantity: item quantity (integer)`
 * `unit_price: price unit of the item (integer)`
 
-You can create as much shopping list as you want, they will all be added to a single file and a single list, like the following:
+You can create as much shopping lists as you want, they will all be added to a single file and a single list, like the following:
 
 ```console
 iex> ShoppingList.create_shopping_list(10, 100)
@@ -85,11 +87,11 @@ Will return something like:
 {:ok, [%EmailsList{email: "rick@mail.com"}]}
 ```
 
-The `crate_emails_list/2` contains the param:
+The `crate_emails_list/1` contains the param:
 
 * `email: buyer email (string)`
 
-Such as the shopping list, you can create as much emails list as you want, and it will also be added to a single lis like below:
+Such as the shopping list, you can create as much emails lists as you want, and it will also be added to a single list like below:
 
 ```console
 iex> EmailsList.create_emails_list("rick@mail.com")
@@ -111,7 +113,7 @@ The return should be:
 
 After having our both lists, we can now generate our emails list with the values of the shopping list distributed equally except for one rule.
 
-The rule is: if your shopping list's sum of values divided for the quantity of the items results in an infinite number, e.g. `100 / 3 = 0,33333333...` , the values, in this case `33` cents, will be divided along the buyers, but the last buyer will receive the rest of the cents missing so our distribution will be fully given not missing a single cent!
+*The rule is: if your shopping list's sum of values divided by the quantity of the items results in an infinite number, e.g. `100 / 3 = 0,33333333...` , the values, in this case `33` cents, will be divided along the buyers, but the last buyer will receive the rest of the cents missing so our distribution will be fully given not missing a single cent!*
 
 Let's see the examples of use with the function to generate the list `get_shopping_list_distributed/0`:
 
@@ -121,7 +123,9 @@ Generating list with sum not inifinite
 ShoppingList.get_shopping_list_distributed
 ```
 
-Remember we already created above three buyers with the shopping list's quantitities of `10, 1` and `2` and unit prices of `100, 10` and `50`. So the result in this case will be:
+Remember we already created above three buyers with the shopping list's quantities of `10, 1` and `2` and unit prices of `100, 10` and `50`.
+
+So the result in this case will be:
 
 ```console
 {:ok,
@@ -132,7 +136,9 @@ Remember we already created above three buyers with the shopping list's quantiti
 ]}
 ```
 
-Now if we add Lord Vader into this mess, we'll have to give him him equal part, plus the rest amount of the value so not a single cent will be missing!
+Generating emails list distributed with infinite sums
+
+Now if we add Lord Vader into this mess, we'll have to give him him his equal part, plus the rest amount of the value so not a single cent will be missing!
 
 ```console
 EmailsList.create_emails_list("darthvader@mail.com")
@@ -151,7 +157,7 @@ Result
 
 ```
 
-Then now calling the list generating function, the final result shoud be:
+Finally now, calling the list generating function, the final result shoud be:
 
 ```console
 {:ok,
@@ -163,13 +169,13 @@ Then now calling the list generating function, the final result shoud be:
 ]}
 ```
 
-What can I do.. he's the boss! 🤷‍♂️
+What can we do.. he's the boss! 🤷‍♂️
 
 ![Alt Text](https://media2.giphy.com/media/ylyUQnqAdMNs4QITOE/giphy.gif?cid=ecf05e4759bca6r354lmkuyi533fiot942d7yjqokk5etnc9&rid=giphy.gif&ct=g)
 
 ## **Tests**
 
-This application was 100% tested. So to checkout out the tests run:
+This application was 100% tested. So to checkout out the tests, run:
 
 ```console
 mix test
