@@ -113,7 +113,7 @@ The return should be:
 
 After having our both lists, we can now generate our emails list with the values of the shopping list distributed equally except for one rule.
 
-*The rule is: if your shopping list's sum of values divided by the quantity of the items results in an infinite number, e.g. `100 / 3 = 0,33333333...` , the values, in this case `33` cents, will be divided along the buyers, but the last buyer will receive the rest of the cents missing so our distribution will be fully given not missing a single cent!*
+*The rule is: if your shopping list's sum of values divided by the quantity of the items results in an infinite number, e.g. `100 / 3 = 0,33333333...` , the values, in this case `33` cents, will be divided along the buyers, but the last buyer will receive the rest of the cents missing, in this case `32 + 1`, so our distribution will be fully given not missing a single cent!*
 
 Let's see the examples of use with the function to generate the list `get_shopping_list_distributed/0`:
 
@@ -136,7 +136,7 @@ So the result in this case will be:
 ]}
 ```
 
-Generating emails list distributed with infinite sums
+### Generating emails list distributed with infinite sums
 
 Now if we add Lord Vader into this mess, we'll have to give him his equal part, plus the rest amount of the value so not a single cent will be missing!
 
@@ -175,7 +175,7 @@ What can we do.. he's the boss! 🤷‍♂️
 
 ## **Tests**
 
-This application was 100% tested. So to checkout out the tests, run:
+This application was 100% tested. So to check out the tests, run:
 
 ```console
 mix test
